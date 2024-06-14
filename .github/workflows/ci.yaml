@@ -1,0 +1,41 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup poetry
+        run: pipx install poetry
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          cache: poetry
+          architecture: x64
+          python-version: '3.9'
+
+      - name: Poetry check
+        run: poetry check
+
+      - name: Install requirements
+        run: poetry install
+
+      - name: Test
+        run: poetry run pytest
+
+      - name: Ruff check
+        run: poetry run ruff check .
+
+      - name: Ruff format check
+        run: poetry run ruff format --check --diff
