@@ -3,8 +3,9 @@ import os
 import pandas as pd
 import numpy as np
 import requests
+from basedosdados import Backend
 from urllib.parse import urlparse, urlunparse, urlencode
-import basedosdados as bd
+from .constants import constants
 
 
 def read_architecture_table(url: str) -> pd.DataFrame:
@@ -34,12 +35,12 @@ def read_architecture_table(url: str) -> pd.DataFrame:
 
 def get_credentials_from_env() -> dict[str, str]:
     return {
-        "email": os.getenv("BD_DJANGO_EMAIL").strip(),  # type: ignore
-        "password": os.getenv("BD_DJANGO_PASSWORD").strip(),  # type: ignore
+        "email": os.getenv(constants.ENV.value["email"]).strip(),  # type: ignore
+        "password": os.getenv(constants.ENV.value["password"]).strip(),  # type: ignore
     }
 
 
-def get_headers(backend: bd.Backend) -> dict[str, str]:
+def get_headers(backend: Backend) -> dict[str, str]:
     """
     Get headers to be able to do mutations in backend api
     """
