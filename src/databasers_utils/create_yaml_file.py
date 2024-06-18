@@ -1,7 +1,7 @@
 import os
 import re
 import ruamel.yaml as yaml
-
+from typing import Optional
 from .utils import find_model_directory, read_architecture_table
 
 
@@ -19,7 +19,7 @@ def extract_column_parts(input_string: str) -> str:
         )
 
 
-def extract_relationship_info(input_string: str) -> tuple[str, str] | None:
+def extract_relationship_info(input_string: str) -> Optional[tuple[str, str]]:
     try:
         dataset, table, column = extract_column_parts(input_string)
 
