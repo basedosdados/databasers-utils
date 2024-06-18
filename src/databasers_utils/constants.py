@@ -7,6 +7,6 @@ class constants(Enum):
         "prod": "https://backend.basedosdados.org/api/v1/graphql",
     }
     ENV = {
-        "email": "DB_DJANGO_EMAIL",
-        "password": "DB_DJANGO_PASSWORD",
+        "email": "BD_DJANGO_EMAIL",
+        "password": "BD_DJANGO_PASSWORD",
     }
