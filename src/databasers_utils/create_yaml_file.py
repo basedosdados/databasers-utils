@@ -1,7 +1,7 @@
 import os
 import re
 import ruamel.yaml as yaml
-from typing import Optional
+from typing import Optional, Union
 from .utils import find_model_directory, read_architecture_table
 
 
@@ -81,8 +81,8 @@ def create_unique() -> list[str]:
 
 
 def create_yaml_file(
-    arch_url: str | list[str],
-    table_id: str | list[str],
+    arch_url: Union[str, list[str]],
+    table_id: Union[str, list[str]],
     dataset_id: str,
     table_description: str = "Insert table description here",
     at_least: float = 0.95,
