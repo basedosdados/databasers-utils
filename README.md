@@ -8,25 +8,13 @@
 pyenv shell 3.9
 ```
 
-2. Crie uma env
+2. Crie a env ou ativa se já existir
 
 ```sh
-python -m venv .venv
+poetry shell
 ```
 
-3. Ativa a env
-
-```sh
-source .venv/bin/activate
-```
-
-4. Instale o poetry na env
-
-```sh
-python -m pip install poetry
-```
-
-5. Instalar dependências com poetry
+3. Instale as dependências
 
 ```sh
 poetry install
@@ -34,9 +22,8 @@ poetry install
 
 ## Aplicando o lint
 
-
 > [!IMPORTANT]
-> O command vai executar o formatador `ruff format .` e linter `ruff check --fix .`. Algumas regras do linter requer intervenção manual para ser resolvido
+> O command vai executar o formatador `ruff format .` e o linter `ruff check --fix .`. Algumas regras do linter requer intervenção manual para ser resolvido
 
 ```sh
 poetry run lint
