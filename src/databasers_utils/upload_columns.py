@@ -1,8 +1,56 @@
 import json
+import pandas as pd
 from basedosdados import backend as b
 from .utils import get_headers, read_architecture_table
-from .link_directory_metadata import get_directory_column_id
 from typing import Optional
+
+
+def get_directory_column_id(
+    directory_column_name: str, directory_table_name: str, backend: b.Backend
+) -> str:
+    """
+    Get the directory id from that column
+    """
+    query = """ query($column_name: String)
+        {allColumn(name: $column_name) {
+                edges {
+                node {
+                    name
+                    _id
+                    table {
+                    dataset {
+                        fullSlug
+                    }
+                    slug
+                    }
+                }
+                }
+            }
+            }
+    """
+
+    variables = {"column_name": directory_column_name}
+    response = backend._execute_query(query=query, variables=variables)
+    response = backend._simplify_graphql_response(response)["allColumn"]
+    df = pd.json_normalize(response)
+
+    colunas_de_diretorio = df["table.dataset.fullSlug"].str.contains(
+        "diretorios"
+    )
+    for _, coluna in df[colunas_de_diretorio].iterrows():
+        if coluna["table.slug"] == directory_table_name:
+            print(
+                f"\nConnecting to the directory column: \n\t"
+                f"{coluna['table.dataset.fullSlug']}.{coluna['table.slug']}:{coluna['name']} "
+            )
+            return coluna["_id"]  # type: ignore
+
+    raise (
+        ValueError(
+            "\nWARNING - Unable to find the directory column with the following information: "
+            "\n\tcolumn_name: {directory_column_name}  \n\ttable: {directory_table_name}"
+        )
+    )
 
 
 def create_column(
