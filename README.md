@@ -17,7 +17,7 @@ poetry shell
 3. Instale as dependências
 
 ```sh
-poetry install
+poetry install --with dev --no-root
 ```
 
 ## Aplicando o lint
