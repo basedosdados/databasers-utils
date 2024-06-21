@@ -2,7 +2,11 @@
 name = "databasers-utils"
 version = "0.1.0"
 description = ""
-authors = ["Pedro Castro <aspeddro@gmail.com>"]
+authors = [
+    "Laura Amaral <laura.amaral@basedosdados.org>",
+    "Pedro Castro <pedro.castro@basedosdados.org>",
+    "Arthur Gusmão <arthur.gusmao@basedosdados.org>"
+]
 readme = "README.md"
 packages = [
     { include = "databasers_utils", from = "src" }
