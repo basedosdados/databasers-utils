@@ -37,9 +37,13 @@ export BD_DJANGO_PASSWORD="password"
 ### Uso
 
 ```python
-from databasers_utils import TableArch, copy_models_from_dev_to_prod
+from databasers_utils import (
+    TableArchitecture,
+    copy_models_from_dev_to_prod,
+    get_architecture_table_from_api,
+)
 
-arch = TableArch(
+arch = TableArchitecture(
     dataset_id="br_ibge_pib",
     tables={
         "uf": "https://docs.google.com/spreadsheets/d/12F5NzhOYlN_bi9flLBEdXDWpa5iVakSP4EKm9UoyWuo/edit?usp=drive_link",
@@ -65,4 +69,8 @@ arch.upload_columns()
 
 # Copia os modelos em dev para prod
 copy_models_from_dev_to_prod(["br_ibge_ppm", "br_ibge_pam"])
+
+# Retorna um DataFrame da arquitetura obtida na API
+# Util para gerar arquitetura quando ela não está no Drive
+get_architecture_table_from_api("br_ms_sinasc", "microdados")
 ```

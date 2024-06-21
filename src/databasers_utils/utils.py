@@ -69,7 +69,7 @@ def get_headers(backend: Backend) -> dict[str, str]:
     return header_for_mutation_query
 
 
-def find_model_directory(dir: str) -> str:
+def get_model_directory(dir: str) -> str:
     model_dir = f"{dir}/models"
     if os.path.exists(model_dir):
         return model_dir

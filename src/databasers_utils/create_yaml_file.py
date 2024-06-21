@@ -2,7 +2,7 @@ import os
 import re
 import ruamel.yaml as yaml
 from typing import Optional, Union
-from .utils import find_model_directory, read_architecture_table
+from .utils import get_model_directory, read_architecture_table
 
 
 def extract_column_parts(input_string: str) -> str:
@@ -118,7 +118,7 @@ def create_yaml_file(
 
     """
     if mkdir:
-        models_path = find_model_directory(dir)
+        models_path = get_model_directory(dir)
         output_path = f"{models_path}/{dataset_id}"
         os.makedirs(output_path, exist_ok=True)
     else:
