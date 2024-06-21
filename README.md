@@ -1,5 +1,7 @@
 # databasers-utils
 
+Pacote para uso da equipe de dados na Base dos Dados.
+
 - [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Instalação
@@ -26,16 +28,11 @@ export BD_DJANGO_PASSWORD="password"
 
 #### Windows
 
-- Right-click on 'This PC' or 'My Computer' and select 'Properties'.
-- Click on 'Advanced system settings'.
-- Click the 'Environment Variables' button.
-- In the 'System variables' section, click 'New...' and enter OPENAI_API_KEY as the variable name and your API key as the variable value.
-
-1. Em Pesquisar, procure e selecione: Sistema (Painel de Controle)
-2. Clique no link Configurações avançadas do sistema.
-3. Clique em Variáveis de Ambiente. 
-4. Na seção 'Variáveis do Sistema' clique em 'Novo' e insira `BD_DJANGO_EMAIL` como nome da variável e o seu email como valor. Faça o mesmo para `BD_DJANGO_PASSWORD`.
-5. Clique em OK. Feche todas as janelas restantes clicando em OK.
+- Em Pesquisar, procure e selecione: Sistema (Painel de Controle)
+- Clique no link Configurações avançadas do sistema.
+- Clique em Variáveis de Ambiente. 
+- Na seção 'Variáveis do Sistema' clique em 'Novo' e insira `BD_DJANGO_EMAIL` como nome da variável e o seu email como valor. Faça o mesmo para `BD_DJANGO_PASSWORD`.
+- Clique em OK. Feche todas as janelas restantes clicando em OK.
 
 ### Uso
 
