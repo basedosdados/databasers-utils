@@ -83,14 +83,22 @@ class TableArchitecture:
     def update_dbt_project(self) -> None:
         return update_dbt_project(self.dataset_id, dir=os.getcwd())
 
-    def upload_columns(self, replace_all_schema: bool = True) -> None:
+    def upload_columns(
+        self,
+        if_column_exists: str = "pass",
+        replace_all_schema: bool = True,
+        verbose: bool = False,
+    ) -> None:
         backend = Backend(graphql_url=constants.API_URL.value["prod"])
         for table_id, url in self.__tables.items():
             upload_columns_from_architecture(
                 dataset_id=self.dataset_id,
-                table_slug=table_id,
+                table_id=table_id,
                 url_architecture=url,
-                replace_all_schema=replace_all_schema,
                 backend=backend,
+                if_column_exists=if_column_exists,
+                replace_all_schema=replace_all_schema,
+                verbose=verbose,
             )
+
         return None
