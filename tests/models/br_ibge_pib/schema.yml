@@ -69,14 +69,14 @@ models:
         description: Índice de Gini da distribuição do produto interno bruto a preços
             correntes
       - name: gini_va
-        description: 'Índice de Gini da distribuição do valor adicionado bruto a preços
-            correntes da agropecuária '
+        description: Índice de Gini da distribuição do valor adicionado bruto a preços
+            correntes da agropecuária
       - name: gini_va_agro
-        description: 'Índice de Gini da distribuição do valor adicionado bruto a preços
-            correntes da agropecuária '
+        description: Índice de Gini da distribuição do valor adicionado bruto a preços
+            correntes da agropecuária
       - name: gini_va_industria
-        description: 'Índice de Gini da distribuição do valor adicionado bruto a preços
-            correntes da indústria '
+        description: Índice de Gini da distribuição do valor adicionado bruto a preços
+            correntes da indústria
       - name: gini_va_servicos
         description: Índice de Gini da distribuição do valor adicionado bruto a preços
             correntes dos serviços, exclusive administração, defesa, educação e saúde

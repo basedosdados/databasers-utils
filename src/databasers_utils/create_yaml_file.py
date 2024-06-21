@@ -1,5 +1,6 @@
 import os
 import re
+import pandas as pd
 import ruamel.yaml as yaml
 from typing import Optional, Union
 from .utils import get_model_directory, read_architecture_table
@@ -157,7 +158,7 @@ def create_yaml_file(
         unique_keys_copy = unique_keys.copy()
         architecture_df = read_architecture_table(url)
         architecture_df.dropna(subset=["bigquery_type"], inplace=True)
-        architecture_df = architecture_df[
+        architecture_df: pd.DataFrame = architecture_df[  # type: ignore
             ~architecture_df["bigquery_type"].apply(
                 lambda x: any(word in x.lower() for word in exclude)
             )
@@ -191,10 +192,10 @@ def create_yaml_file(
 
         for _, row in architecture_df.iterrows():
             column = yaml.comments.CommentedMap()
-            column["name"] = row["name"]
-            column["description"] = row["description"]
-            directory_column = row["directory_column"]
-            if len(directory_column.strip()) != 0:
+            column["name"] = row["name"].strip()
+            column["description"] = row["description"].strip()
+            directory_column = row["directory_column"].strip()
+            if len(directory_column) != 0:
                 tests = []
                 tests = create_relationships(directory_column)
                 column["tests"] = tests
