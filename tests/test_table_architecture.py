@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 from databasers_utils import TableArchitecture
 
 TESTS_DIR = os.path.join(os.getcwd(), "tests")
@@ -13,9 +14,11 @@ def test_architecture():
         },
     )
 
-    arch = table_arch.tables()
-    assert "uf" and "gini" in arch.keys()
-    assert len(arch) == 2
+    tables = table_arch.tables()
+    assert "uf" and "gini" in tables.keys()
+    assert isinstance(tables["uf"], pd.DataFrame)
+    assert isinstance(tables["gini"], pd.DataFrame)
+    assert len(tables) == 2
 
 
 def test_create_yaml_file():
@@ -36,7 +39,7 @@ def test_create_yaml_file():
     )
 
 
-def tnst_create_sql_files():
+def test_create_sql_files():
     table_arch = TableArchitecture(
         dataset_id="br_ibge_pib",
         tables={
