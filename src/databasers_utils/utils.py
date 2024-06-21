@@ -6,6 +6,7 @@ import requests
 from basedosdados import Backend
 from urllib.parse import urlparse, urlunparse, urlencode
 from .constants import constants
+import ruamel.yaml as yaml
 
 
 def read_architecture_table(url: str) -> pd.DataFrame:
@@ -76,20 +77,32 @@ def find_model_directory(dir: str) -> str:
         raise Exception(f"Failed to find models directory under {dir}")
 
 
-# def find_model_directory(directory: str) -> str | None:
-#     # Check if 'model' is in the current directory
-#     if "models" in os.listdir(directory):
-#         return os.path.join(directory, "models")
-#
-#     if "queries-basedosdados-dev" in os.listdir(directory):
-#         return os.path.join(directory, "queries-basedosdados-dev", "models")
-#
-#     # Get the parent directory
-#     parent_directory = os.path.dirname(directory)
-#
-#     # If we've reached the root directory without finding 'model', return None
-#     if directory == parent_directory:
-#         return None
-#
-#     # Otherwise, continue searching recursively in parent directories
-#     return find_model_directory(parent_directory)
+def update_dbt_project(dataset_id: str, dir: str) -> None:
+    if ["dbt_project.yml", "dbt_project.yaml"] not in os.listdir(dir):
+        raise Exception("Failed to find root directory with dbt_project file")
+
+    dbt_project_yaml = f"{dir}/dbt_project.yml"
+
+    if not os.path.exists(dbt_project_yaml):
+        dbt_project_yaml = f"{dir}/dbt_project.yaml"
+
+    yaml_obj = yaml.YAML(typ="rt")
+    yaml_obj.explicit_start = True
+    yaml_obj.indent(mapping=2, sequence=2, offset=2)
+
+    with open(dbt_project_yaml, "r") as file:
+        data = yaml_obj.load(file)
+
+    models = data["models"]["basedosdados"]
+    models.update(
+        {dataset_id: {"+materialized": "table", "+schema": dataset_id}}
+    )
+
+    data["models"]["basedosdados"] = {
+        key: models[key] for key in sorted(models)
+    }
+
+    with open(dbt_project_yaml, "w") as file:
+        yaml_obj.dump(data, file)
+
+    print(f"dbt_project successfully updated with {dataset_id}!")

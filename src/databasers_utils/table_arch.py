@@ -1,9 +1,12 @@
 import pandas as pd
 import os
 from basedosdados import Backend
-from .utils import read_architecture_table, find_model_directory
+from .utils import (
+    read_architecture_table,
+    find_model_directory,
+    update_dbt_project,
+)
 from .create_yaml_file import create_yaml_file
-from .update_dbt_project import update_dbt_project_yaml
 from .upload_columns import upload_columns_from_architecture
 from .constants import constants
 
@@ -78,8 +81,7 @@ class TableArch:
         return None
 
     def update_dbt_project(self) -> None:
-        update_dbt_project_yaml(self.dataset_id, dir=os.getcwd())
-        return None
+        return update_dbt_project(self.dataset_id, dir=os.getcwd())
 
     def upload_columns(self, replace_all_schema: bool = True) -> None:
         backend = Backend(graphql_url=constants.API_URL.value["prod"])
