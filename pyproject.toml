@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "databasers-utils"
+version = "0.1.0"
+description = ""
+authors = [
+    "Laura Amaral <laura.amaral@basedosdados.org>",
+    "Pedro Castro <pedro.castro@basedosdados.org>",
+    "Arthur Gusmão <arthur.gusmao@basedosdados.org>"
+]
+readme = "README.md"
+packages = [
+    { include = "databasers_utils", from = "src" }
+]
+
+[tool.poetry.scripts]
+lint = "scripts.lint:main"
+
+[tool.poetry.dependencies]
+python = "~3.9"
+basedosdados = {version = "2.0.0b15", extras = ["all"]}
+pandas = "^2.2.2"
+numpy = "^1.26.4"
+requests = "^2.32.3"
+ruamel-yaml = "^0.18.6"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+ruff = "^0.4.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 80
