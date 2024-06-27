@@ -35,13 +35,13 @@ files = [
 
 [[package]]
 name = "basedosdados"
-version = "2.0.0b15"
+version = "2.0.0b16"
 description = "Organizar e facilitar o acesso a dados brasileiros através de tabelas públicas no BigQuery."
 optional = false
-python-versions = ">=3.8.1,<4"
+python-versions = "<4,>=3.8.1"
 files = [
-    {file = "basedosdados-2.0.0b15-py3-none-any.whl", hash = "sha256:2832cc2e93e6207ef4600516d90dc0858794e56d19674cc8493d77c2ae0a7e38"},
-    {file = "basedosdados-2.0.0b15.tar.gz", hash = "sha256:4fb669a087e8d12e30978efaca375d6760324eb3da6635e7ab35ed761cfdaef3"},
+    {file = "basedosdados-2.0.0b16-py3-none-any.whl", hash = "sha256:4a9ce1cd1438e647bac32833c1d1faed0f1b8fe6d5947e954da30e743abf2227"},
+    {file = "basedosdados-2.0.0b16.tar.gz", hash = "sha256:b7d6a0c1fc6047d7eb0f6a19e3d48b7a10cff5dc6adf263b16d230fc74bef368"},
 ]
 
 [package.dependencies]
@@ -1706,4 +1706,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9"
-content-hash = "4e3333bac3bf5ec8c49e43e6ebd097e01586053924a3607a27de36bde0791e65"
+content-hash = "fc1206cc796f698ff826b4108d5509884523c50ec5e5be75f6b6d3b0e480d488"
