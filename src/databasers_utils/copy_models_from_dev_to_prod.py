@@ -62,9 +62,7 @@ def copy_models_from_dev_to_prod(
 
     for dataset_id in datasets:
         prod_models_dataset_dir = f"{prod_models_dir}/{dataset_id}"
-        copy_tree(
-            f"{dev_models_path}/{dataset_id}", prod_models_dataset_dir, update=1
-        )
+        copy_tree(f"{dev_models_path}/{dataset_id}", prod_models_dataset_dir)
         update_dbt_project(dataset_id, dir=root_prod)
         [
             change_origin_from_dev_to_staging(file, prod_models_dataset_dir)
