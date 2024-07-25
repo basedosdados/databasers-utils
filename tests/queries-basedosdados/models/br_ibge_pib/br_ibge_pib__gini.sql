@@ -1,4 +1,4 @@
-{{ config(alias="gini", schema="br_ibge_pib", materialized="table",) }}
+{{ config(alias="gini", schema="br_ibge_pib", materialized="table") }}
 select
     safe_cast(id_uf as string) id_uf,
     safe_cast(ano as int64) ano,

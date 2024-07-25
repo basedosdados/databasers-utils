@@ -1,4 +1,5 @@
 import os
+import pytest
 import pandas as pd
 import ruamel.yaml as yaml
 import sys
@@ -23,6 +24,7 @@ def test_architecture():
     assert len(tables) == 2
 
 
+@pytest.mark.dependency()
 def test_create_yaml_file():
     table_arch = TableArchitecture(
         dataset_id="br_ibge_pib",
@@ -41,6 +43,7 @@ def test_create_yaml_file():
     )
 
 
+@pytest.mark.dependency()
 def test_create_sql_files():
     table_arch = TableArchitecture(
         dataset_id="br_ibge_pib",
@@ -67,6 +70,7 @@ def test_create_sql_files():
     )
 
 
+@pytest.mark.dependency()
 def test_update_dbt_project():
     table_arch = TableArchitecture(
         dataset_id="br_ibge_pib",
