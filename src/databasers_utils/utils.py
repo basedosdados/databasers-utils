@@ -78,8 +78,13 @@ def get_model_directory(dir: str) -> str:
 
 
 def update_dbt_project(dataset_id: str, dir: str) -> None:
-    if ["dbt_project.yml", "dbt_project.yaml"] not in os.listdir(dir):
-        raise Exception("Failed to find root directory with dbt_project file")
+    if not any(
+        file in os.listdir(dir)
+        for file in ["dbt_project.yml", "dbt_project.yaml"]
+    ):
+        raise Exception(
+            f"Failed to find root directory at {dir} with dbt_project file"
+        )
 
     dbt_project_yaml = f"{dir}/dbt_project.yml"
 

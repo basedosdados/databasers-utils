@@ -52,13 +52,16 @@ class TableArchitecture:
 
         output_path = f"{models_dir}/{self.dataset_id}"
 
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
         for table_id, url in self.__tables.items():
             architecture_df = read_architecture_table(url)
 
             if preprocessed_staging_column_names:
                 architecture_df["original_name"] = architecture_df["name"]
 
-            header = f'{{{{ config(alias="{table_id}", schema="{self.dataset_id}") }}}}'
+            header = f'{{{{ config(alias="{table_id}", schema="{self.dataset_id}", materialized="table") }}}}'
 
             with open(
                 f"{output_path}/{self.dataset_id}__{table_id}.sql", "w"
@@ -80,8 +83,8 @@ class TableArchitecture:
         print("SQL files created!")
         return None
 
-    def update_dbt_project(self) -> None:
-        return update_dbt_project(self.dataset_id, dir=os.getcwd())
+    def update_dbt_project(self, dir: str = os.getcwd()) -> None:
+        return update_dbt_project(self.dataset_id, dir=dir)
 
     def upload_columns(
         self,
