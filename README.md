@@ -4,12 +4,6 @@ Pacote para uso da equipe de dados na Base dos Dados.
 
 - [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-## Instalação
-
-```sh
-poetry add git+https://github.com/basedosdados/databasers-utils.git
-```
-
 ## Setup
 
 ### Credenciais
