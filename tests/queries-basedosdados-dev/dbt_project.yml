@@ -1,0 +1,7 @@
+name: dummy
+
+models:
+  basedosdados:
+    dummy:
+      +materialized: table
+      +schema: dummy
