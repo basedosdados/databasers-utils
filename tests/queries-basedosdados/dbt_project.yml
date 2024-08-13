@@ -1,0 +1,11 @@
+---
+name: dummy
+
+models:
+  basedosdados:
+    br_ibge_pib:
+      +materialized: table
+      +schema: br_ibge_pib
+    dummy:
+      +materialized: table
+      +schema: dummy

@@ -131,6 +131,7 @@ def create_yaml_file(
     schema_path = f"{output_path}/schema.yml"
 
     yaml_obj = yaml.YAML(typ="rt")
+    yaml_obj.explicit_start = True
     yaml_obj.indent(mapping=4, sequence=4, offset=2)
 
     if os.path.exists(schema_path):

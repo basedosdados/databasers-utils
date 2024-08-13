@@ -1,4 +1,4 @@
-{{ config(alias="uf", schema="br_ibge_pib") }}
+{{ config(alias="uf", schema="br_ibge_pib", materialized="table") }}
 select
     safe_cast(ano as int64) ano,
     safe_cast(id_uf as string) id_uf,
@@ -10,4 +10,4 @@ select
     safe_cast(va_industria as int64) va_industria,
     safe_cast(va_servicos as int64) va_servicos,
     safe_cast(va_adespss as int64) va_adespss,
-from `basedosdados-dev.br_ibge_pib_staging.uf` as t
+from `basedosdados-staging.br_ibge_pib_staging.uf` as t
