@@ -1,5 +1,4 @@
 from gql import Client, gql
-from google.colab import userdata
 from gql.transport.requests import RequestsHTTPTransport
 from google.colab import userdata
 from typing import Dict
