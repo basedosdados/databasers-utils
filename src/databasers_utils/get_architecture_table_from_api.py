@@ -61,7 +61,7 @@ def get_columns_info_from_api(
 
     query_data = backend._execute_query(query=query, variables=variables)  # type: ignore
 
-    query_data = backend._simplify_response(query_data)["allColumn"]
+    query_data = backend._simplify_response(query_data)["allColumn"]["items"]
 
     df = pd.json_normalize(query_data, max_level=3)
     df.index = df.order
