@@ -16,8 +16,8 @@ packages = [
 lint = "scripts.lint:main"
 
 [tool.poetry.dependencies]
-python = "~3.9"
-basedosdados = {version = "2.0.0-beta.16", extras = ["all"]}
+python = ">=3.9,<4"
+basedosdados = {version = "2.0.0-beta.26", extras = ["all"]}
 pandas = "^2.2.2"
 numpy = "^1.26.4"
 requests = "^2.32.3"
