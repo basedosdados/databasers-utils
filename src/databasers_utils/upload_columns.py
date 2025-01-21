@@ -34,7 +34,7 @@ def get_directory_column_id(
 
     variables = {"column_name": directory_column_name}
     response = backend._execute_query(query=query, variables=variables)
-    response = backend._simplify_graphql_response(response)["allColumn"]
+    response = backend._simplify_response(response)["allColumn"]
     df = pd.json_normalize(response)
 
     colunas_de_diretorio = df["table.dataset.fullSlug"].str.contains(
@@ -122,7 +122,7 @@ def get_column_id(
     }}"""
 
     data = backend._execute_query(query=query)
-    data = backend._simplify_graphql_response(response=data)["allColumn"]
+    data = backend._simplify_response(response=data)["allColumn"]
     if data:
         return data[0]["_id"]
     else:
@@ -143,7 +143,7 @@ def get_n_columns(table_id, backend: b.Backend):
         }}"""
 
     data = backend._execute_query(query=query)
-    data = backend._simplify_graphql_response(response=data)["allTable"]
+    data = backend._simplify_response(response=data)["allTable"]
 
     return data[0]["columns"]["edgeCount"]
 
@@ -165,7 +165,7 @@ def get_bqtype_dict(backend: b.Backend):
     data = backend._execute_query(query=query)
 
     # Simplify the GraphQL response to extract the relevant data
-    data = backend._simplify_graphql_response(response=data)["allBigquerytype"]
+    data = backend._simplify_response(response=data)["allBigquerytype"]
 
     # Create a dictionary where the 'name' part is the key and the '_id' is the value
     bqtype_dict = {item["name"]: item["_id"] for item in data}
@@ -208,9 +208,7 @@ def get_all_columns_id(table_id: str, backend: b.Backend):
     }}"""
 
     data = backend._execute_query(query=query)
-    columns_json = backend._simplify_graphql_response(response=data)[
-        "allColumn"
-    ]
+    columns_json = backend._simplify_response(response=data)["allColumn"]
 
     if data:
         columns_list = [col["_id"] for col in columns_json]
