@@ -33,14 +33,16 @@ def get_directory_column_id(
     """
 
     variables = {"column_name": directory_column_name}
-    response = backend._execute_query(query=query, variables=variables)
-    response = backend._simplify_response(response)["allColumn"]
+    response = backend._execute_query(query=query, variables=variables)[
+        "allColumn"
+    ]["items"]
     df = pd.json_normalize(response)
 
-    colunas_de_diretorio = df["table.dataset.fullSlug"].str.contains(
-        "diretorios"
-    )
-    for _, coluna in df[colunas_de_diretorio].iterrows():
+    colunas_de_diretorio = df[
+        df["table.dataset.fullSlug"].str.contains("diretorios") == True  # noqa: E712
+    ]
+
+    for _, coluna in colunas_de_diretorio.iterrows():
         if coluna["table.slug"] == directory_table_name:
             if verbose:
                 print(
@@ -121,9 +123,9 @@ def get_column_id(
         }}
     }}"""
 
-    data = backend._execute_query(query=query)
-    data = backend._simplify_response(response=data)["allColumn"]
-    if data:
+    data = backend._execute_query(query=query)["allColumn"]["items"]
+
+    if len(data) > 0:
         return data[0]["_id"]
     else:
         return None
@@ -142,8 +144,7 @@ def get_n_columns(table_id, backend: b.Backend):
         }}
         }}"""
 
-    data = backend._execute_query(query=query)
-    data = backend._simplify_response(response=data)["allTable"]
+    data = backend._execute_query(query=query)["allTable"]["items"]
 
     return data[0]["columns"]["edgeCount"]
 
@@ -162,10 +163,7 @@ def get_bqtype_dict(backend: b.Backend):
   }"""
 
     # Execute the GraphQL query to retrieve the data
-    data = backend._execute_query(query=query)
-
-    # Simplify the GraphQL response to extract the relevant data
-    data = backend._simplify_response(response=data)["allBigquerytype"]
+    data = backend._execute_query(query=query)["allBigquerytype"]["items"]
 
     # Create a dictionary where the 'name' part is the key and the '_id' is the value
     bqtype_dict = {item["name"]: item["_id"] for item in data}
@@ -207,17 +205,16 @@ def get_all_columns_id(table_id: str, backend: b.Backend):
         }}
     }}"""
 
-    data = backend._execute_query(query=query)
-    columns_json = backend._simplify_response(response=data)["allColumn"]
+    data = backend._execute_query(query=query)["allColumn"]["items"]
 
     if data:
-        columns_list = [col["_id"] for col in columns_json]
+        columns_list = [col["_id"] for col in data]
         return columns_list
     else:
         print("There is no column in this table to be deleted")
 
 
-def delete_column_by_id(column_id: str, backend: b.Backend):
+def delete_column_by_id(column_id: str, backend: b.Backend) -> bool:
     mutation = """
                     mutation($input: UUID!) {
                         DeleteColumn(id: $input) {
@@ -243,11 +240,12 @@ def delete_column_by_id(column_id: str, backend: b.Backend):
     return True
 
 
-def delete_all_columns(table_id: str, backend: b.Backend):
+def delete_all_columns(table_id: str, backend: b.Backend) -> None:
     columns = get_all_columns_id(table_id, backend)
 
-    for col in columns:
-        delete_column_by_id(col, backend)
+    if columns is not None:
+        for col in columns:
+            delete_column_by_id(col, backend)
 
 
 def upload_columns_from_architecture(
@@ -258,7 +256,7 @@ def upload_columns_from_architecture(
     if_column_exists: str = "pass",
     replace_all_schema: bool = True,
     verbose: bool = False,
-):
+) -> None:
     """
     Uploads columns from an architecture table to the specified dataset and table in  platform.
 
@@ -322,9 +320,12 @@ def upload_columns_from_architecture(
                 directory_column_name, directory_table_slug, backend, verbose
             )
 
+        row_bq_type = row["bigquery_type"].strip().upper()
+        bigquery_type = "BOOLEAN" if row_bq_type == "BOOL" else row_bq_type
+
         mutation_parameters = {
             "table": table_slug,
-            "bigqueryType": bqtype_dict[row["bigquery_type"].upper()],
+            "bigqueryType": bqtype_dict[bigquery_type],
             "name": row["name"],
             "description": row["description"],
             "coveredByDictionary": row["covered_by_dictionary"] == "yes",
