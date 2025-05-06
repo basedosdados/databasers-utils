@@ -77,7 +77,7 @@ class TableArchitecture:
                     sql_line = f"    safe_cast({original_name} as {bq_type}) {column_name},\n"
                     file.write(sql_line)
 
-                sql_last_line = f"from `basedosdados-dev.{self.dataset_id}_staging.{table_id}` as t\n"
+                sql_last_line = f'from {{{{ set_datalake_project("{self.dataset_id}.{table_id}") }}}} as t\n'
                 file.write(sql_last_line)
 
         print("SQL files created!")

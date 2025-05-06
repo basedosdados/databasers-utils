@@ -33,7 +33,6 @@ export BD_DJANGO_PASSWORD="password"
 ```python
 from databasers_utils import (
     TableArchitecture,
-    copy_models_from_dev_to_prod,
     get_architecture_table_from_api,
 )
 
@@ -60,9 +59,6 @@ arch.update_dbt_project()
 
 # Faz o upload das colunas para o DJango
 arch.upload_columns()
-
-# Copia os modelos em dev para prod
-copy_models_from_dev_to_prod(["br_ibge_ppm", "br_ibge_pam"])
 
 # Retorna um DataFrame da arquitetura obtida na API
 # Util para gerar arquitetura quando ela não está no Drive
