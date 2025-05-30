@@ -25,10 +25,21 @@ def read_architecture_table(url: str) -> pd.DataFrame:
         io.StringIO(
             requests.get(export_url, timeout=10).content.decode("utf-8")
         )
-    )
+    ).apply(lambda x: x.str.strip() if x.dtype == object else x)
 
     df_architecture = df_architecture.loc[
-        df_architecture["name"] != "(excluido)"
+        ~df_architecture["name"].isin(  # type: ignore
+            [
+                "(excluido)",
+                "excluido",
+                "(excluído)",
+                "excluído",
+                "removido",
+                "(removido)",
+                "deletado",
+                "(deletado)",
+            ]
+        )
     ]
 
     return df_architecture.replace(np.nan, "", regex=True)
